@@ -1,0 +1,58 @@
+---
+title: "HW3_C50_PCA_CART"
+author: "hsi"
+date: "2019/7/5"
+output: html_document
+---
+```{r}
+install.packages("C50")
+library(C50)
+data(churn)
+data<-churnTrain[,c(-1,-3,-4,-5,-20)]  #因為PCA只能對數值欄位做萃取，故，把非數值欄位去除
+
+```
+```{r}
+pca_T <- princomp(data, cor=T)  #cor=T 使用相關係數矩陣進行轉置運算
+summary(pca_T)
+
+```
+
+```{r}
+print(pca_T)
+
+
+```
+
+```{r}
+print(pca_T$loadings)
+```
+
+```{r}
+p <- predict(pca_T) #計算出每個樣本值經過PCA轉置後的值
+head(p,10)
+
+class(p)
+class(p[,1])
+p[,1]
+```
+
+```{r}
+#PCA後用分類回歸樹建模
+#資料採PCA後，取前8個主成分帶入
+install.packages("rpart")
+library(rpart)
+install.packages("C50")
+library(C50)
+data(churn)
+pca.df <- as.data.frame(p[,c(1:7)])
+class(pca.df)
+churnF <- churnTrain[,c(20)]
+final_pca.df <- cbind(pca.df,churnF)
+head(final_pca.df)
+churn.tree = rpart(churnF~.,data=final_pca.df)
+churn.tree
+plot(churn.tree)
+text(churn.tree)
+```
+
+
