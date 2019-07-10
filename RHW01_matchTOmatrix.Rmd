@@ -1,0 +1,238 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+setwd("D:\\R\\selfMemos\\R_DataMining")
+getwd()
+
+data <- read.table("match.txt",header=FALSE,sep="|")
+data
+class(data)
+c1 <- data$A
+c1
+levels(c1)
+class(levels(c1))
+
+```
+
+```{r}
+mat = matrix(1:25, nrow=5)
+colnames(mat) = levels(c1)
+rownames(mat) = levels(c1)
+mat
+mat[c('A'),]
+class(mat[c('A'),])
+```
+```{r}
+data
+data[,c('V1','V2')]
+levels(data[,c('V1')])
+for(i in levels(data[,c('V1')])){
+  print(i)
+}
+```
+
+```{r}
+for(i in data[1:2,]){
+  print(paste(i,class(i)))
+}
+```
+```{r}
+for(i in mat){
+  print(paste(mat,i))
+}
+mat
+mat['A','B']
+
+for(i in mat[,]){
+  print(i)
+}
+for(i in c('A','B','C','D')){
+  print(i)
+}
+
+```
+
+
+```{r}
+
+(as.character(data$V1) =='A')
+(as.character(data$V2) =='A')
+```
+
+```{r}
+(as.character(data$V2) =='A')
+```
+```{r}
+
+a = 'A'
+mat[a,]
+for (i in mat[a,]){
+  print(i)
+}
+```
+```{r}
+for(i in levels(data[,c('V1')])){
+  #print(i)
+  for(j in levels(data[,c('V2')]))
+    if(i==j){
+      mat[i,j] =-1;
+    }
+    print(paste(i,j,mat[i,j],data[]))
+}
+
+data
+
+as.character(data['V1'])
+for(i in data[1:2,]){
+  #print(paste(i,class(i)))
+  #print(class(i))
+  tmp = c(as.character(i))
+  print(tmp)
+  #sprintf("%s, %s\n",class(i), class(as.character(i)))
+}
+
+
+s1 = data$V1 =='A'
+s2 = data$V2 =='B'
+data[s1 & s2,]
+data[s1 & s2,3]
+data[s1 & s2,-1]
+```
+```{r}
+insert_function = function(df,ma,col1, col2){
+  col1 = as.character(col1)
+  col2 = as.character(col2)
+  s1 = df$V1 == col1
+  s2 = df$V2 == col2
+  ma[col1,col2] =df[s1&s2,3] 
+}
+
+data$V1 = as.character(data$V1)
+data$V2 = as.character(data$V2)
+data2 = data
+dmt = data.matrix(data2)
+dmt
+for(i in levels(data[,c('V1')])){
+  for(j in levels(data[,c('V2')])){
+    if(i==j){
+      mat[i,j] =-1;
+      b = c(i,j,-1)
+      print(b)
+      data2 = rbind(data2,b)
+    }
+    s1 = data$V1 ==i;
+    s2 = data$V2 ==j;
+    print(data[s1 & s2, 3])
+  }
+}
+data2
+
+```
+
+
+```{r}
+for (i in data){
+  print(i)
+}
+```
+
+```{r}
+c1 = as.character(data$V1)
+c2 = as.character(data$V2)
+value = as.character(data$V3)
+
+for(i in c1){
+  print(i)
+  for(j in c2){
+    
+  }
+}
+
+```
+
+
+```{r}
+setwd("D:\\R\\selfMemos\\R_DataMining")
+data <- read.table("match.txt",header=FALSE,sep="|")
+
+mat = matrix(1:25, nrow=5)
+colnames(mat) = levels(data$V2)
+rownames(mat) = levels(data$V1)
+mat
+
+for(i in levels(data[,c('V1')])){
+  for(j in levels(data[,c('V2')])){
+    if(i==j) {mat[i,j] =-1;}
+    apply(data,1,function(e){
+      if(e[1]==i & e[2]==j){
+        mat[i,j] = e[3]
+        print(i,j)
+      }
+      
+    });
+    #print(paste(i,j,mat[i,j]))
+  }
+}
+mat
+#====================================================================================
+
+for(i in levels(data[,c('V1')])){
+  #print(i)
+  for(j in levels(data[,c('V2')]))
+    if(i==j){
+      mat[i,j] =-1;
+    }
+    print(paste(i,j,mat[i,j],data[]))
+}
+
+
+insert_function = function(df,ma,col1, col2){
+  col1 = as.character(col1)
+  col2 = as.character(col2)
+  s1 = df$V1 == col1
+  s2 = df$V2 == col2
+  ma[col1,col2] =df[s1&s2,3] 
+}
+
+data$V1 = as.character(data$V1)
+data$V2 = as.character(data$V2)
+data2 = data
+dmt = data.matrix(data2)
+dmt
+for(i in levels(data[,c('V1')])){
+  for(j in levels(data[,c('V2')])){
+    if(i==j){
+      mat[i,j] =-1;
+      b = c(i,j,-1)
+      print(b)
+      data2 = rbind(data2,b)
+    }
+    s1 = data$V1 ==i;
+    s2 = data$V2 ==j;
+    print(data[s1 & s2, 3])
+  }
+}
+data2
+
+c1 = as.character(data$V1)
+c2 = as.character(data$V2)
+value = as.character(data$V3)
+
+for(i in c1){
+  print(i)
+  for(j in c2){
+    
+  }
+}
+```
+
+
+```{r}
+m = matrix(1:4, byrow=T,nrow=2)
+m
+```
+
