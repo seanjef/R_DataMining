@@ -1,0 +1,96 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+###繪製基本圖形
+- plot	繪製基本圖(畫布)
+
+###增添額外資訊
+- lines	把資料點用線連接
+- points	繪製新的資料點
+- text	補充文字說明在圖上
+- title	補充主旨
+- mtext	在圖外顯示大主旨
+- axis	增加軸的labels
+
+```
+
+
+
+```{r}
+data(iris)
+plot(iris$Petal.Length,iris$Petal.Width,type='n')
+points(iris$Petal.Length,iris$Petal.Width,col=iris$Species)
+abline(h=0.9,col='grey',lty = 2)
+abline(v=2.5,col='grey',lty = 2)
+#legend(4.5,1,pch=1,legend = levels(iris$Species),col=1:3)
+legend('bottomright',pch=1,legend = levels(iris$Species),col=1:3)
+#text(iris$Petal.Length+0.1,iris$Petal.Width+0.05,1:nrow(iris),cex=0.5)
+text(iris$Petal.Length+0.1,iris$Petal.Width+0.05,paste('(',iris$Petal.Length,', ',iris$Petal.Width,')'),cex=0.5)
+
+title("iris")
+
+
+```
+
+```{r}
+install.packages('ggplot2')
+library('ggplot2')
+setwd("E:\\Rrepo\\riii\\Statistics\\")
+#data <- read.table("cdc.Rdata",header=FALSE,sep="|")
+load('cdc.Rdata')
+
+cdc$exerany = as.factor(cdc$exerany)
+cdc$hlthplan = as.factor(cdc$hlthplan)
+cdc$smoke100 = as.factor(cdc$smoke100)
+
+g <- ggplot(cdc,aes(x=height,y=weight))
+
+g+geom_point()
+#和graphic不同的是，ggplot都是把全部的dataset都入，再透過其提供函式去整理資料
+g+geom_point(aes(col=gender))
+
+#改用直方圖 並用x軸以genhlth為分類
+g <- ggplot(cdc,aes(x=genhlth))
+g
+#資料用性別去區分
+g+geom_bar(aes(col=gender))
+
+#增加y軸說明
+g+geom_bar(aes(col=gender))+ylab('次數')
+#cdc$
+g+geom_bar(aes(col=genhlth))+ylab('次數')
+#可以看見如果沒有還有後續邏輯的設計，geom與stat函數是對應的
+g+stat_count(aes(col=genhlth))+ylab('次數')
+
+
+g+geom_bar(aes(col=gender))+ylab('次數')
+
+
+#比較不同bar之間，並排後呈現
+g = ggplot(cdc,aes(x=gender))
+#stack會依據實際類別數量，每個類別會堆疊前一類別數量
+g+geom_bar(aes(fill=genhlth),position='stack')
+#fill 會轉成百分比
+g+geom_bar(aes(fill=genhlth),position='fill')
+
+g+geom_bar(aes(fill=genhlth),position='dodge')
+
+#identity比較不適合長條圖，因為不同stack，因為每個類別都是從0畫起，故，可能先畫的類別數值較少，就會被後面類別資訊蓋過
+g+geom_bar(aes(fill=genhlth),position='identity')
+
+#ggplot 也有疊加概念，但不同graphics的是:除了整個dataset傳入後再由提供的函式轉換外，他疊加的方式是有其函式的架構
+g <- ggplot(cdc,aes(x=age))
+g+geom_density()
+g+geom_density(aes(col=gender))
+
+```
+
+
+
+
+
+
+
+
