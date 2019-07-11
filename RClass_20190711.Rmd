@@ -1,6 +1,9 @@
 ---
 title: "R Notebook"
 output: html_notebook
+
+reference1: https://antv.alipay.com/zh-cn/index.html
+
 ---
 ```{r}
 ###繪製基本圖形
@@ -88,9 +91,42 @@ g+geom_density(aes(col=gender))
 ```
 
 
+```{r}
+#本身圖的x軸是weight
+g <- ggplot(cdc,aes(x=weight))
+#
+g+ geom_histogram()+facet_wrap(~genhlth)
+g+ geom_histogram()+facet_wrap(gender~genhlth)
+g+ geom_histogram()+facet_grid(gender~genhlth)
+
+```
+
+```{r}
+g <- ggplot(cdc,aes(x=genhlth))
+g+geom_bar()+coord_polar(theta='x')
+g+geom_bar()+coord_polar(theta='y')
+```
+
+```{r}
+#ggplot本身沒有直接的函示可以直接畫出圓餅圖，但是可以透過既有函示邏輯去疊加畫出
+#圓餅圖結果
+ggplot(cdc,aes(x=1)) + geom_bar(aes(fill=genhlth)) + coord_polar(theta='y')
+
+
+ggplot(cdc,aes(x=1))
 
 
 
+ggplot(cdc,aes(x=1)) + geom_bar(aes(fill=genhlth))
+```
+
+```{r}
+#以ggplot為基底所提供GUI操作的畫圖套件
+install.packages('esquisse')
+library('esquisse')
+#呼叫GUI界面
+esquisse::esquisser()
+```
 
 
 
