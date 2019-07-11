@@ -129,4 +129,33 @@ esquisse::esquisser()
 ```
 
 
+```{r}
+getwd()
+setwd("E:\\Rrepo\\riii\\Statistics\\")
+getwd()
+load('appledaily.RData')
+
+str(appledaily)
+as.POSIXct(appledaily[1,'dt'],format='%Y年%m月%d日%H:%M')
+
+#比較 as.POSIXct() 與 as.POSIXlt()
+t1 = as.POSIXct(appledaily$dt,format='%Y年%m月%d日%H:%M')
+unclass(as.POSIXct(appledaily[1,'dt'],format='%Y年%m月%d日%H:%M'))
+#可以看出Xct會有毫秒資訊
+
+
+t2 = as.POSIXlt(appledaily$dt,format='%Y年%m月%d日%H:%M')
+unclass(as.POSIXlt(appledaily[1,'dt'],format='%Y年%m月%d日%H:%M'))
+#可以看出Xlt會有針對該元素有區分的個別時、分、秒的個別資訊
+
+#應用時要小心mon會從0起算  year是從1900起算
+unclass(as.POSIXlt(appledaily[1,'dt'],format='%Y年%m月%d日%H:%M'))$mon
+
+
+#字串轉換成時間
+strptime(appledaily$dt[1],'%Y年%m月%d日%H:%M')
+
+
+
+```
 
